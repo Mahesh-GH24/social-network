@@ -1,4 +1,4 @@
-import { Schema, Document } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 //interface for User
 interface IUser extends Document {
@@ -56,3 +56,8 @@ userSchema
         return `${this.friends.length}`;
     }
 )
+
+//initialize User Model 
+const User = model('user',userSchema);
+
+export default User;

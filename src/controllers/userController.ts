@@ -25,7 +25,10 @@ export const getUsers = async(_req: Request, res:Response) => {
 //get user by id
 export const getUserById = async(req: Request, res:Response) => {
     try{
-        const users = await User.findOne({_id:req.params.userId})
+        //const users = await User.findOne({_id:req.params.userId});
+        //.select('-__v');
+
+        const users = await User.findOne({_id:req.params.userId}).populate('thoughts').populate('friends');
         res.json(users);
     } catch (err) {
         res.status(500).json(err)

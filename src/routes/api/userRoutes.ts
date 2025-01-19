@@ -1,6 +1,7 @@
 import { Router } from "express";
-const router = Router();
 import {createUser,getUsers, getUserById} from '../../controllers/userController.js';
+
+const router = Router();
 
 // api/users
 router.route('/').get(getUsers).post(createUser);

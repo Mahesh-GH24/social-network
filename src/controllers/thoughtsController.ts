@@ -41,3 +41,29 @@ export const getThoughtById = async(req: Request, res:Response) => {
         res.status(500).json(err)
     }
 }
+
+//Create a new reaction against thought - basically an update/put
+export const createReactionToThought = async (req: Request, res: Response) => {
+    try{
+        //thoughtId
+        const thoughtId = req.params.thoughtid;
+
+        //reaction
+       // const reaction = req.params.reaction;
+
+        const thought = await Thought.findOneAndUpdate(
+            {_id: thoughtId},
+            { $addToSet: {reactions: req.body}},
+            {runValidators: false, new: true}
+        );
+        if (!thought) {
+            res
+             .status(404)
+             .json({ message: 'Unable to create a new Reaction. Please check the ThoughtId' });
+         } else {  
+            res.json(thought);
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}

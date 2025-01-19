@@ -1,4 +1,4 @@
-import { Schema, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 //interface for Reaction
 interface IReaction extends Document {
@@ -68,7 +68,7 @@ const thoughtSchema = new Schema<IThought>(
     {
         //Include Virtuals
         toJSON: {
-            virtuals: true,
+            virtuals: false,
             getters: true,
         },
         id: false,
@@ -84,4 +84,8 @@ thoughtSchema
     }
 )
 
+//initialize Thoughts Model 
+const Thought = model('thought',thoughtSchema);
+
+export default Thought;
 

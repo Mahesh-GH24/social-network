@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {createUser,getUsers, getUserById} from '../../controllers/userController.js';
+import {createUser,getUsers, getUserById, createUserFriend} from '../../controllers/userController.js';
 
 const router = Router();
 
@@ -8,5 +8,8 @@ router.route('/').get(getUsers).post(createUser);
 
 // api/users/:userid
 router.route('/:userId').get(getUserById);
+
+// api/users/:userid/friends/:friendid
+router.route('/:userId/friends/:friendId').post(createUserFriend);
 
 export { router as UserRouter};

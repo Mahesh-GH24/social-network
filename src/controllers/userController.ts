@@ -31,3 +31,29 @@ export const getUserById = async(req: Request, res:Response) => {
         res.status(500).json(err)
     }
 }
+
+//create a new friend
+export const createUserFriend = async (req: Request, res: Response) => {
+    try{
+        //userid
+        const userId = req.params.userId;
+
+        //friendid
+        const friendId = req.params.friendId;
+
+        const user = await User.findOneAndUpdate(
+            {_id: userId},
+            { $addToSet: {friends: friendId}},
+            {new: true}
+        );
+        if (!user) {
+            res
+             .status(404)
+             .json({ message: 'Unable to create a new friend. Please check either the UserId or FriendId' });
+         } else {  
+            res.json(user);
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}

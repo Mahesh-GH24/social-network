@@ -4,7 +4,6 @@ import { User, Thought} from '../models/index.js';
 //create a new thought
 export const createThought = async (req: Request, res: Response) => {
     try{
-        console.log("here");
         const dbThoughtData = await Thought.create(req.body);
         const user = await User.findOneAndUpdate(
             { username: req.body.username},

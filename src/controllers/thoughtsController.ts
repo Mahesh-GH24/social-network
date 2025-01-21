@@ -67,3 +67,76 @@ export const createReactionToThought = async (req: Request, res: Response) => {
         res.status(500).json(err);
     }
 }
+
+//Update Thought
+export const updateThought = async (req: Request, res: Response) => {
+    try{
+        //thoughtid
+        const thoughtid = req.params.thoughtid;   
+
+        const thought = await Thought.findOneAndUpdate(
+            {_id: thoughtid},
+            { $set: req.body},
+            {runValidators: true, new: true}
+        );
+        if (!thought) {
+            res
+             .status(404)
+             .json({ message: 'Unable to update Thought. Please check the ThoughtId' });
+         } else {  
+            res.json(thought);
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+//Delete Thought
+export const deleteThought = async (req: Request, res: Response) => {
+    try{
+        //thoughtid
+        const thoughtid = req.params.thoughtid;   
+
+        const thought = await Thought.findOneAndDelete( {_id: thoughtid});
+       
+        if (!thought) {
+            res
+             .status(404)
+             .json({ message: 'Unable to delete Thought. Please check the ThoughtId' });
+         } else {  
+            res.json({message: 'Thought has been deleted!'});
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+//Delete Reaction by ReactionId
+export const deleteReactionById = async (req: Request, res: Response) => {
+    try{
+        // reactionid
+        // const reactionid = req.params.reactionid;
+        
+        // thoughtid
+        // const thoughtid = req.params.thoughtid;
+
+        //reactionid & thoughtid
+        const { thoughtid, reactionid } = req.params;
+
+        const thought = await Thought.findByIdAndUpdate( 
+            {_id: thoughtid},
+            { $pull: {reactions: {reactions: reactionid}}},
+            {new: true}
+        );
+       
+        if (!thought) {
+            res
+             .status(404)
+             .json({ message: 'Unable to delete Reaction of Thought. Please check the ThoughtId or ReactionId' });
+         } else {  
+            res.json({message: 'Reaction of Thought has been deleted!'});
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}

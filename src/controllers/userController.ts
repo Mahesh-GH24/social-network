@@ -1,6 +1,6 @@
 //import User from '../models/User.js';
 import { Request, Response } from 'express';
-import { User} from '../models/index.js';
+import { User, Thought} from '../models/index.js';
 
 //create a new user
 export const createUser = async (req: Request, res: Response) => {
@@ -52,9 +52,82 @@ export const createUserFriend = async (req: Request, res: Response) => {
         if (!user) {
             res
              .status(404)
-             .json({ message: 'Unable to create a new friend. Please check either the UserId or FriendId' });
+             .json({ message: 'Unable to create a new Friend. Please check either the UserId or FriendId' });
          } else {  
             res.json(user);
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+//Update User
+export const updateUser = async (req: Request, res: Response) => {
+    try{
+        //userid
+        const userId = req.params.userId;   
+
+        const user = await User.findOneAndUpdate(
+            {_id: userId},
+            { $set: req.body},
+            {runValidators: true, new: true}
+        );
+        if (!user) {
+            res
+             .status(404)
+             .json({ message: 'Unable to update User. Please check the UserId' });
+         } else {  
+            res.json(user);
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+
+//Delete User
+export const deleteUser = async (req: Request, res: Response) => {
+    try{
+        //userid
+        const userId = req.params.userId;   
+
+        const user = await User.findOneAndDelete( {_id: userId});
+       
+        if (!user) {
+            res
+             .status(404)
+             .json({ message: 'Unable to delete User. Please check the UserId' });
+         } else {  
+            await Thought.deleteMany({ username: { $in: user.username} });
+            res.json({message: 'User and associated Thoughts has been deleted!'});
+         }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+//Delete Friend of User
+export const deleteFriendOfUser = async (req: Request, res: Response) => {
+    try{
+        //userid
+        const userId = req.params.userId; 
+
+        //friendid
+        const friendId = req.params.friendId;
+
+
+        const user = await User.findByIdAndUpdate( 
+            {_id: userId},
+            { $pull: {friends: {friends: friendId}}},
+            {new: true}
+        );
+       
+        if (!user) {
+            res
+             .status(404)
+             .json({ message: 'Unable to delete Friend of User. Please check the UserId or FriendId' });
+         } else {  
+            res.json({message: 'Friend of User has been deleted!'});
          }
     } catch (err) {
         res.status(500).json(err);

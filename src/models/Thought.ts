@@ -70,7 +70,7 @@ const thoughtSchema = new Schema<IThought>(
     {
         //Include Virtuals
         toJSON: {
-            virtuals: false,
+            virtuals: true,
             getters: true,
         },
         // include a timestamp
@@ -84,7 +84,7 @@ thoughtSchema
     .virtual('reactionCount')
     //Getter
     .get(function (this: any) {
-        return `${this.reaction.length}`;
+        return `${this.reactions.length}`;
     }
 )
 

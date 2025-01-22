@@ -13,6 +13,6 @@ router.route('/:thoughtid').get(getThoughtById).put(updateThought).delete(delete
 router.route('/:thoughtid/reactions').post(createReactionToThought);
 
 // api/thoughts/:thoughtid/reactions/:reactionid
-router.route('/:thoughtid/reactions/:reactionid').post(deleteReactionById);
+router.route('/:thoughtid/reactions/:reactionid').delete(deleteReactionById);
 
 export { router as ThoughtRouter};

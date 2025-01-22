@@ -39,6 +39,11 @@ const reactionSchema = new Schema<IReaction>(
         },
     },
     {
+        //Include Virtuals
+        toJSON: {
+            virtuals: true,
+            getters: true,
+        },
         timestamps: true,
         _id: false
     }
@@ -87,6 +92,25 @@ thoughtSchema
         return `${this.reactions.length}`;
     }
 )
+
+//Create Virtual called formatDate
+thoughtSchema
+    .virtual('formatDate')
+    //Getter
+    .get(function (this:any) {
+        return `${this.createdAt.toLocaleString()}`;
+    }
+)
+
+//Create Virtual called formatDate
+reactionSchema
+    .virtual('formatDate')
+    //Getter
+    .get(function (this:any) {
+        return `${this.createdAt.toLocaleString()}`;
+    }
+)
+
 
 //initialize Thoughts Model 
 const Thought = model('thought',thoughtSchema);

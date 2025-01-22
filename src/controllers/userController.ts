@@ -118,7 +118,7 @@ export const deleteFriendOfUser = async (req: Request, res: Response) => {
 
         const user = await User.findByIdAndUpdate( 
             {_id: userId},
-            { $pull: {friends: {friends: friendId}}},
+            { $pull: {friends: friendId}},
             {new: true}
         );
        

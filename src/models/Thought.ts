@@ -1,11 +1,12 @@
 import { Schema, model, Document, Types } from 'mongoose';
+// import { dateFormat } from '../utils/formatDate';
 
 //interface for Reaction
 interface IReaction extends Document {
     reactionId: Schema.Types.ObjectId;
     reactionBody: string;
     username: string;
-    createdAt : Date;
+    createdAt : Schema.Types.Date;
 }
 
 //interface for Thought
@@ -54,7 +55,8 @@ const thoughtSchema = new Schema<IThought>(
         },
         createdAt: {
             type: Date,
-            default:Date.now(),
+            default:Date.now,
+            //get: (timestamp:any) => dateFormat(timestamp),
             required:true,
             unique:true,
         },
@@ -71,6 +73,8 @@ const thoughtSchema = new Schema<IThought>(
             virtuals: false,
             getters: true,
         },
+        // include a timestamp
+        timestamps: true,
         id: false,
     }
 );

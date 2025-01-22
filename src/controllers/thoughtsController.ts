@@ -44,28 +44,67 @@ export const getThoughtById = async(req: Request, res:Response) => {
 
 //Create a new reaction against thought - basically an update/put
 export const createReactionToThought = async (req: Request, res: Response) => {
+    // try{
+    //     //thoughtId
+    //     const thoughtId = req.params.thoughtid;
+
+    //     //reaction
+    //    // const reaction = req.params.reaction;
+
+    //     const thought = await Thought.findOneAndUpdate(
+    //         {_id: thoughtId},
+    //         { $addToSet: {reactions: req.body}},
+    //         {runValidators: false, new: true}
+    //     );
+    //     if (!thought) {
+    //         res
+    //          .status(404)
+    //          .json({ message: 'Unable to create a new Reaction. Please check the ThoughtId' });
+    //      } else {  
+    //         res.json(thought);
+    //      }
+    // } catch (err) {
+    //     res.status(500).json(err);
+    // }
+
+    //Alternate
     try{
         //thoughtId
         const thoughtId = req.params.thoughtid;
 
-        //reaction
-       // const reaction = req.params.reaction;
+        //get reaction data from the req body
+        const {reactionBody, username} = req.body;
 
-        const thought = await Thought.findOneAndUpdate(
+        //validate the i/p
+        if(!reactionBody || !username) {
+            return res.status(400).json({message: 'Reaction body and username are required'});
+        }
+
+        //create reaction object
+       const reaction = {
+        reactionBody,
+        username,
+        createdAt: new Date()
+       };
+
+       //find the thought and add the reaction object into reactions array
+        const thought = await Thought.findByIdAndUpdate(
             {_id: thoughtId},
-            { $addToSet: {reactions: req.body}},
+            { $push: {reactions: reaction}},
             {runValidators: false, new: true}
         );
+
         if (!thought) {
             res
              .status(404)
              .json({ message: 'Unable to create a new Reaction. Please check the ThoughtId' });
          } else {  
-            res.json(thought);
+            res.status(200).json(thought);
          }
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({message: 'Server error',err});
     }
+    return;
 }
 
 //Update Thought

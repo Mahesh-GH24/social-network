@@ -29,15 +29,15 @@
    Please do a npm i and then npm start to start the API server. Now, we could use insomnia to test all our endpoints as documented in the walkthru video. The below screen shots helps you visualize the workflow / functionality
 
    
-   **Screenshots**:
+   ## Screenshots
 
    **Application Start**
 
-   ![index](/src/assets/images/app-start.jpg)
-
+   ![index](src/assets/images/app-start.jpg)
+   
    **Insomnia request for an endpoint**
 
-   ![index](/src/assets/images/insomnia-test.jpg)
+   ![index](src/assets/images/insomnia-test.jpg)
 
    
    ## Walkthru-Video

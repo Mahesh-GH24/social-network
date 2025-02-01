@@ -3,13 +3,14 @@
 
    ## Description
 
-   This application comprises of a list of backend API's using Moongoose and MongoDB which would be the base to integrate the front end social network application.
+   This application comprises of a list of backend API's using Moongoose and MongoDB which would be the base to integrate the front end social network application at a later time.
 
    ## Table of Contents
 
    - [Installation](#installation)
    - [Technologies](#Technologies)
    - [Usage](#usage)
+   - [Screenshots](#screenshots)
    - [Walkthru-Video](#walkthru-video)
    - [Challenges](#challenges)
    - [Tests](#tests)
@@ -40,8 +41,8 @@
 
    
    ## Walkthru-Video
-   Please watch the below link explaining how to start the application and test all the API endpoints.
-   
+   Please watch the below video explaining how to start the application and test all the API endpoints.
+   https://drive.google.com/file/d/1kAyDH1X1vLn-o6XRE6lZZFmACTz01nM2/view?usp=sharing 
    
    ## Challenges
    During the project, testing all the different endpoints was time taking as the data needs to be verified meticulously but it was interesting to understand the relationships between different objects within Mongo.  
